@@ -1,79 +1,86 @@
 import React, { useState } from "react";
 import "./index.css";
 
-const Calculate: React.FC = () => {
-  const [display, setDisplay] = useState<string>("");
-  const [operator, setOperator] = useState<string | null>(null);
-  const [previousValue, setPreviousValue] = useState<number | null>(null);
+const Calculator: React.FC = () => {
+  const [display, setDisplay] = useState("0");
+  const [operation, setOperation] = useState<string | null>(null);
 
   const handleClick = (value: string) => {
-    if (["+", "-", "*", "/"].includes(value)) {
-      // Handle operator click
-      if (display !== "") {
-        setPreviousValue(parseFloat(display));
-        setDisplay("");
-        setOperator(value);
-      }
+    if (value === "C") {
+      setDisplay("0");
+      setOperation(null);
     } else if (value === "=") {
-      // Calculate result
-      if (operator && previousValue !== null) {
-        const currentValue = parseFloat(display);
-        let result: number;
-        switch (operator) {
-          case "+":
-            result = previousValue + currentValue;
-            break;
-          case "-":
-            result = previousValue - currentValue;
-            break;
-          case "*":
-            result = previousValue * currentValue;
-            break;
-          case "/":
-            result = previousValue / currentValue;
-            break;
-          default:
-            return;
-        }
-        setDisplay(result.toString());
-        setOperator(null);
-        setPreviousValue(null);
+      try {
+        setDisplay(eval(display).toString());
+      } catch {
+        setDisplay("Error");
       }
-    } else if (value === "C") {
-      // Clear display
-      setDisplay("");
-      setOperator(null);
-      setPreviousValue(null);
     } else {
-      // Handle number or decimal point
-      setDisplay((prevDisplay) => prevDisplay + value);
+      if (display === "0") {
+        setDisplay(value);
+      } else {
+        setDisplay((prev) => prev + value);
+      }
     }
   };
 
   return (
     <div className="calculator">
-      <div className="display">{display || "0"}</div>
+      <div data-testid="display" className="display">
+        {display}
+      </div>
       <div className="buttons">
-        <button onClick={() => handleClick("C")}>C</button>
-        <button onClick={() => handleClick("/")}>/</button>
-        <button onClick={() => handleClick("*")}>*</button>
-        <button onClick={() => handleClick("-")}>-</button>
-        <button onClick={() => handleClick("+")}>+</button>
-        <button onClick={() => handleClick("1")}>1</button>
-        <button onClick={() => handleClick("2")}>2</button>
-        <button onClick={() => handleClick("3")}>3</button>
-        <button onClick={() => handleClick("4")}>4</button>
-        <button onClick={() => handleClick("5")}>5</button>
-        <button onClick={() => handleClick("6")}>6</button>
-        <button onClick={() => handleClick("7")}>7</button>
-        <button onClick={() => handleClick("8")}>8</button>
-        <button onClick={() => handleClick("9")}>9</button>
-        <button onClick={() => handleClick("0")}>0</button>
-        <button onClick={() => handleClick(".")}>.</button>
-        <button onClick={() => handleClick("=")}>=</button>
+        <button data-testid="button-clear" onClick={() => handleClick("C")}>
+          C
+        </button>
+        <button data-testid="button-divide" onClick={() => handleClick("/")}>
+          /
+        </button>
+        <button data-testid="button-multiply" onClick={() => handleClick("*")}>
+          *
+        </button>
+        <button data-testid="button-subtract" onClick={() => handleClick("-")}>
+          -
+        </button>
+        <button data-testid="button-add" onClick={() => handleClick("+")}>
+          +
+        </button>
+        <button data-testid="button-1" onClick={() => handleClick("1")}>
+          1
+        </button>
+        <button data-testid="button-2" onClick={() => handleClick("2")}>
+          2
+        </button>
+        <button data-testid="button-3" onClick={() => handleClick("3")}>
+          3
+        </button>
+        <button data-testid="button-4" onClick={() => handleClick("4")}>
+          4
+        </button>
+        <button data-testid="button-5" onClick={() => handleClick("5")}>
+          5
+        </button>
+        <button data-testid="button-6" onClick={() => handleClick("6")}>
+          6
+        </button>
+        <button data-testid="button-7" onClick={() => handleClick("7")}>
+          7
+        </button>
+        <button data-testid="button-8" onClick={() => handleClick("8")}>
+          8
+        </button>
+        <button data-testid="button-9" onClick={() => handleClick("9")}>
+          9
+        </button>
+        <button data-testid="button-0" onClick={() => handleClick("0")}>
+          0
+        </button>
+        <button data-testid="button-equals" onClick={() => handleClick("=")}>
+          =
+        </button>
       </div>
     </div>
   );
 };
 
-export default Calculate;
+export default Calculator;
