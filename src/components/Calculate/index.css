@@ -1,0 +1,28 @@
+.calculator {
+  width: 45vw;
+  margin: 0 auto;
+}
+
+.display {
+  background: #eee;
+  padding: 20px;
+  font-size: 2em;
+  text-align: right;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+button {
+  padding: 20px;
+  font-size: 1.5em;
+  border: 1px solid #eee;
+  background: #fffdfd;
+  cursor: pointer;
+}
+
+button:hover {
+  background: aliceblue;
+}
